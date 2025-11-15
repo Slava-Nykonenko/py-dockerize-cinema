@@ -1,11 +1,8 @@
 import time
 
-from dotenv import load_dotenv
 from django.core.management import BaseCommand
 from django.db import connections
 from django.db import OperationalError
-
-load_dotenv()
 
 
 class Command(BaseCommand):
@@ -13,7 +10,10 @@ class Command(BaseCommand):
         while True:
             try:
                 _ = connections["default"]
-                return "Successfully connected to PostgreSQL"
+                self.stdout.write(
+                    self.style.SUCCESS("Successfully connected to PostgreSQL")
+                )
+                return 0
             except OperationalError:
                 time.sleep(1)
-                print("Waiting for connection to the PostgreSQL database...")
+                self.stdout.write("Waiting for connection...")

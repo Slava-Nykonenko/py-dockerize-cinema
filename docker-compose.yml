@@ -24,7 +24,7 @@ services:
     env_file:
       - .env
     volumes:
-      - database:$PGDATA
+      - database:/var/lib/postgresql/data
 
 volumes:
   database:
